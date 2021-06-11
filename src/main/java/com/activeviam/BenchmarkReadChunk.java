@@ -198,25 +198,25 @@ public class BenchmarkReadChunk {
         boolean mega = mode.equals("mega");
         if (!mega) {
             // Here we don't expect megamorphism: all implementations containing "current" implement `read(int)`
-            for (int i = 0; i < chunkSetSize; i += 1) {
+            for (int i = 0; i < chunkSetSize; i += 4) {
                 // data is not important
                 double[] data1 = new double[] { i, i + 1, i + 2, i + 3 };
                 double[] data2 = new double[] { 4 * i, 4 * i + 1, 4 * i + 2, 4 * i + 3 };
                 chunksetWithLotsOfColumns[i] = new ArrayCurrentChunkDouble(data1);
-//                chunksetWithLotsOfColumns[i + 1] = new BufferCurrentChunkDouble(DoubleBuffer.wrap(data2));
-//                chunksetWithLotsOfColumns[i + 2] = new RandomCurrentChunkDouble();
-//                chunksetWithLotsOfColumns[i + 3] = new StaticValueCurrentChunkDouble();
+                chunksetWithLotsOfColumns[i + 1] = new BufferCurrentChunkDouble(DoubleBuffer.wrap(data2));
+                chunksetWithLotsOfColumns[i + 2] = new RandomCurrentChunkDouble();
+                chunksetWithLotsOfColumns[i + 3] = new StaticValueCurrentChunkDouble();
             }
         } else {
             // Here we expect megamorphism: all implementations containing "new" delegate `read(int)` to their underlying interface.
-            for (int i = 0; i < chunkSetSize; i += 1) {
+            for (int i = 0; i < chunkSetSize; i += 4) {
                 // data is not important
                 double[] data1 = new double[] { i, i + 1, i + 2, i + 3 };
                 double[] data2 = new double[] { 4 * i, 4 * i + 1, 4 * i + 2, 4 * i + 3 };
                 chunksetWithLotsOfColumns[i] = new ArrayNewChunkDouble(data1);
-//                chunksetWithLotsOfColumns[i + 1] = new BufferNewChunkDouble(DoubleBuffer.wrap(data2));
-//                chunksetWithLotsOfColumns[i + 2] = new RandomNewChunkDouble();
-//                chunksetWithLotsOfColumns[i + 3] = new StaticValueNewChunkDouble();
+                chunksetWithLotsOfColumns[i + 1] = new BufferNewChunkDouble(DoubleBuffer.wrap(data2));
+                chunksetWithLotsOfColumns[i + 2] = new RandomNewChunkDouble();
+                chunksetWithLotsOfColumns[i + 3] = new StaticValueNewChunkDouble();
             }
         }
     }
